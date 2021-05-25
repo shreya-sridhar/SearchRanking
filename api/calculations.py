@@ -1,11 +1,15 @@
 import pandas as pd
 import numpy as np
+import tkinter as tk
+from tkinter import filedialog
 
 df1 = pd.read_csv('data/reviews.csv')
+
 
 class Calculations:
 
     def profile_score(self, email):
+        profile_score = 0
         sitter_name = df1[(df1['sitter_email'] == email)][0:1].sitter
         # getting the name of the sitter from the email
         distinct_chars = set()
@@ -46,7 +50,7 @@ class ReadCSV:
             names.append(row.sitter)
             calcs = Calculations()
             curr_ratings_score = calcs.ratings_score(row.sitter_email)
-            # curr_profile_score = calcs.profile_score(row.sitter_email)
+            curr_profile_score = calcs.ratings_score(row.sitter_email)
             curr_search_score = calcs.search_score(row.sitter_email)
             ratings_scores.append(curr_ratings_score)
             profile_scores.append(curr_search_score)
@@ -63,11 +67,28 @@ class ReadCSV:
                 'ratings_score': getData[3], 'search_score': getData[4]}
         df = pd.DataFrame(data, columns=[
                           'email', 'name', 'profile_score', 'ratings_score', 'search_score'])
-        print(df)
-        return
+        df.to_csv('output.csv', header=True)
+        return df
+
+    root = tk.Tk()
+    canvas1 = tk.Canvas(root, width=300, height=300,
+                        bg='lightsteelblue2', relief='raised')
+    canvas1.pack()
+
+    def exportCSV():
+        global df
+        df = self.createDataFrame()
+        
+        export_file_path = filedialog.asksaveasfilename(
+            defaultextension='.csv')
+        df.to_csv(export_file_path, index=False, header=True)
+
+    saveAsButton_CSV = tk.Button(text='Export CSV', command=exportCSV,
+                                 bg='green', fg='white', font=('helvetica', 12, 'bold'))
+    canvas1.create_window(150, 150, window=saveAsButton_CSV)
+
+    root.mainloop()
 
 
-x = Calculations()
-# x.ratings_score("user4739@gmail.com")
 y = ReadCSV()
 y.createDataFrame()
