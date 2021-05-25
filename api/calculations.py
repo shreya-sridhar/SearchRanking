@@ -20,15 +20,20 @@ class Calculations:
         # distinct letters in what we've recovered of the sitter's name.
         profile_score_val = 5/26*len(distinct_chars)
         # O(n) time, space complexity where n is len(sitter_name)
-       return profile_score_val
+        return profile_score_val
 
     def ratings_score(self, email):
-        
-        return
+        sitter_stays = df1[(df1['sitter_email'] == email)]
+        ratings_mean = sitter_stays['rating'].mean()
+        return ratings_mean
 
     def search_score(self, email):
+        
         return
 
 
 x = Calculations()
-x.profile_score("user4739@gmail.com")
+x.ratings_score("user4739@gmail.com")
+
+
+
