@@ -3,7 +3,6 @@ import numpy as np
 
 df1 = pd.read_csv('data/reviews.csv')
 
-
 class Calculations:
 
     def profile_score(self, email):
@@ -42,25 +41,33 @@ class ReadCSV:
         profile_scores = []
         ratings_scores = []
         search_scores = []
-        calcs = Calculations()
         for row in df1.itertuples():
             emails.append(row.sitter_email)
             names.append(row.sitter)
-            curr_profile_score = calcs.profile_score(row.sitter_email)
-            profile_scores.append(curr_profile_score)
-            # ratings_scores.append(calcs.ratings_score(row.sitter_email))
-            # search_scores.append(calcs.search_score(row.sitter_email))
-        print(emails, names, profile_scores, rating_scores, search_scores)
+            calcs = Calculations()
+            curr_ratings_score = calcs.ratings_score(row.sitter_email)
+            # curr_profile_score = calcs.profile_score(row.sitter_email)
+            curr_search_score = calcs.search_score(row.sitter_email)
+            ratings_scores.append(curr_ratings_score)
+            profile_scores.append(curr_search_score)
+            search_scores.append(curr_search_score)
+        # print(emails, names, profile_scores, ratings_scores, search_scores)
 
-        return
+        return [emails, names, profile_scores, ratings_scores, search_scores]
 
     def createDataFrame(self):
-        df = pd.DataFrame({data}, columns=[
+
+        getData = self.gettingData()
+        # print(getData[0])
+        data = {'email': getData[0], 'name': getData[1], 'profile_score': getData[2],
+                'ratings_score': getData[3], 'search_score': getData[4]}
+        df = pd.DataFrame(data, columns=[
                           'email', 'name', 'profile_score', 'ratings_score', 'search_score'])
+        print(df)
         return
 
 
 x = Calculations()
 # x.ratings_score("user4739@gmail.com")
 y = ReadCSV()
-y.gettingData()
+y.createDataFrame()
