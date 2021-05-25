@@ -1,10 +1,12 @@
 import pandas as pd
+from pandas import DataFrame
 import numpy as np
 import csv
 import tkinter as tk
 from tkinter import filedialog
 
 df1 = pd.read_csv('data/reviews.csv')
+
 
 class Calculations:
 
@@ -29,6 +31,7 @@ class Calculations:
 
     def search_score(self, email):
         return 0
+
 
 class ReadCSV:
     # Ouput csv rows
@@ -67,28 +70,34 @@ class ReadCSV:
                           'email', 'name', 'profile_score', 'ratings_score', 'search_score'])
         # The csv should be sorted by Search Score (descending), sorting alphabetically on the
         # sitter name as a tie-breaker.
-        df = df.drop_duplicates().sort_values(["search_score", "name"], ascending = (False, True))
+        df = df.drop_duplicates().sort_values(
+            ["search_score", "name"], ascending=(False, True))
         df.to_csv('output.csv', header=True)
         return df
 
     def exportCSV(self):
+        global df
+        df = self.createDataFrame()
+        print(df)
         root = tk.Tk()
+
         canvas1 = tk.Canvas(root, width=300, height=300,
                             bg='lightsteelblue2', relief='raised')
         canvas1.pack()
-        global df
-        df = self.createDataFrame()
 
-        export_file_path = filedialog.asksaveasfilename(
-            defaultextension='.csv')
-        df.to_csv(export_file_path, index=False, header=True)
+        def exportCSVHelper():
+            # global df
 
-        saveAsButton_CSV = tk.Button(text='Export CSV', bg='green', fg='white', font=('helvetica', 12, 'bold'))
+            export_file_path = filedialog.asksaveasfilename(
+                defaultextension='.csv')
+            df.to_csv(export_file_path, index=False, header=True)
+
+        saveAsButton_CSV = tk.Button(text='Export CSV', command=exportCSVHelper,
+                                     bg='green', fg='white', font=('helvetica', 12, 'bold'))
         canvas1.create_window(150, 150, window=saveAsButton_CSV)
+
         root.mainloop()
 
 
-y = ReadCSV()
-y.exportCSV()
-
-
+# y = ReadCSV()
+# y.exportCSV()
