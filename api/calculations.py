@@ -30,7 +30,6 @@ class Calculations:
     def search_score(self, email):
         return 0
 
-
 class ReadCSV:
     # Ouput csv rows
     # * Sitter email (`email`)
@@ -60,13 +59,15 @@ class ReadCSV:
         return [emails, names, profile_scores, ratings_scores, search_scores]
 
     def createDataFrame(self):
-
         getData = self.gettingData()
         # print(getData[0])
         data = {'email': getData[0], 'name': getData[1], 'profile_score': getData[2],
                 'ratings_score': getData[3], 'search_score': getData[4]}
         df = pd.DataFrame(data, columns=[
                           'email', 'name', 'profile_score', 'ratings_score', 'search_score'])
+        # The csv should be sorted by Search Score (descending), sorting alphabetically on the
+        # sitter name as a tie-breaker.
+        df = df.drop_duplicates().sort_values(["search_score", "name"], ascending = (False, True))
         df.to_csv('output.csv', header=True)
         return df
 
@@ -82,10 +83,8 @@ class ReadCSV:
             defaultextension='.csv')
         df.to_csv(export_file_path, index=False, header=True)
 
-        saveAsButton_CSV = tk.Button(text='Export CSV',
-                                     bg='green', fg='white', font=('helvetica', 12, 'bold'))
+        saveAsButton_CSV = tk.Button(text='Export CSV', bg='green', fg='white', font=('helvetica', 12, 'bold'))
         canvas1.create_window(150, 150, window=saveAsButton_CSV)
-
         root.mainloop()
 
 
