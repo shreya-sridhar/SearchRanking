@@ -7,10 +7,10 @@ from stay import Stay
 
 class ReadData:
 
-    def __init__(self):
-        self.owners = defaultdict(Owner)
-        self.sitters = defaultdict(Sitter)
-        self.stays = defaultdict(Stay)
+    def __init__(self, owners=defaultdict(Owner), sitters=defaultdict(Sitter), stays=defaultdict(Stay)):
+        self.owners = owners
+        self.sitters = sitters
+        self.stays = stays
 
     def readCSV(self):
         with open(r'C:\Users\shrey\rover\static_data\reviews.csv', newline='') as f:
@@ -51,16 +51,16 @@ class ReadData:
             self.stays[stay_id] = current_stay
             id += 1
             # establishing relationship between stays, owners & sitters. A stay belongs to a single owner and sitter. A sitter can have many stays and an owner can have many stays
-            Stay.owner = current_owner
-            Stay.sitter = current_sitter
-            current_owner.stays.append(current_stay)
-            current_sitter.stays.append(current_stay)
             if add_owner:
+                Stay.owner = current_owner
+                current_owner.stays.append(current_stay)
                 self.owners[owner_email] = current_owner
             if add_sitter:
+                Stay.sitter = current_sitter
+                current_sitter.stays.append(current_stay)
                 self.sitters[sitter_email] = current_sitter
         return [self.owners, self.sitters, self.stays]
 
 
-data = ReadData()
-print(data.readCSV()[2])
+# data = ReadData()
+# print(data.readCSV())
