@@ -1,7 +1,6 @@
 import click
 from calculations import ReadCSV
 
-
 @click.command()
 def opener():
     click.echo('\nHello! Welcome to Rover\'s Ratings Page!\n')
@@ -23,15 +22,14 @@ def validateUserInput(user_choice):
 
     runUserAction(user_choice)
 
-
 def runUserAction(user_choice):
     if user_choice == 'X' or user_choice == 'x':
         click.Abort()
 
     if user_choice == 'Y' or user_choice == 'y':
-        y = ReadCSV()
-        y.exportCSV()
-
+        print("hello")
+        read_csv = ReadCSV()
+        read_csv.exportCSV()
 
 if __name__ == '__main__':
     opener()

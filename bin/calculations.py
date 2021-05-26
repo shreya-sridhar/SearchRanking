@@ -98,6 +98,7 @@ class ReadCSV:
 
         root.mainloop()
 
+y = ReadCSV()
+y.exportCSV()
 
-# y = ReadCSV()
-# y.exportCSV()
+
