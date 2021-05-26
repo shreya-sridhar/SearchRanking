@@ -1,30 +1,24 @@
+from collections import defaultdict
 import csv
-from owner import * 
-from sitter import * 
-from stay.py import * 
+from owner import Owner
+from sitter import Sitter
+from stay import Stay
 
 class ReadData:
-    
+
+    def __init__(self):
+        owners = defaultdict(Owner)
+        sitters = {}
+        stays = {}
+
     def readCSV(self):
-        with open('data/reviews.csv', newline='') as f:
+        with open(r'C:\Users\shrey\rover\static_data\reviews.csv', newline='') as f:
             reader = csv.reader(f)
             data = list(reader)
-        
-        for row in data:
-            
+        print(data)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+data = ReadData()
+data.readCSV()
 
 
