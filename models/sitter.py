@@ -6,6 +6,6 @@ class Sitter:
         self.sitter_image = sitter_image
         self.sitter_phone_number = sitter_phone_number
         self.sitter_email = sitter_email 
-
-
+        self.stays = []
+        # an array of Stay objects
 
