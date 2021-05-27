@@ -4,8 +4,7 @@ from owner import Owner
 from sitter import Sitter
 from stay import Stay
 
-
-class ReadData:
+class StayController:
 
     def __init__(self, owners=defaultdict(Owner), sitters=defaultdict(Sitter), stays=defaultdict(Stay)):
         self.owners = owners
@@ -62,5 +61,3 @@ class ReadData:
         return [self.owners, self.sitters, self.stays]
 
 
-# data = ReadData()
-# print(data.readCSV())

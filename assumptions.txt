@@ -1,0 +1,8 @@
+Following assumptions are considered in modelling relationships:
+
+1. I assume that a owner always sends all the dogs for a stay.
+
+{some validation}
+
+2. 
+

@@ -1,7 +1,6 @@
 from read_data import ReadData
 
-
-class ScoreCalculator:
+class SitterController:
 
     def __init__(self):
         self.data = ReadData()
@@ -45,7 +44,10 @@ class ScoreCalculator:
         return total_ratings/count_ratings
 
     # def search_score_calculator(self,email):
-
+        
 
 s = ScoreCalculator()
 s.overall_score_calculator()
+
+
+
