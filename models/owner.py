@@ -11,3 +11,5 @@ class Owner:
         self.stays = stays
         # array of Stay objects
         self.dogs = dogs
+
+        

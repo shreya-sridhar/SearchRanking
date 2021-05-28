@@ -4,5 +4,7 @@ Following assumptions are considered in modelling relationships:
 
 {some validation}
 
-2. 
+2. A dog could belong to multiple owners, but we only consider that a dog belongs to a single owner
+
+
 

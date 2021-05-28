@@ -1,12 +1,43 @@
 from read_data import ReadData
 
+
+
 class SitterController:
 
     def __init__(self):
         self.data = ReadData()
+        # data.Owners()
         self.owners = self.data.readCSV()[0]
+        # data.Sitters()
         self.sitters = self.data.readCSV()[1]
 
+    def listAllSitters([ ]):
+        # order it by score, email_id  
+        # dog ='Barbarian'
+        # location =''
+        # 
+    
+    def listAllSitters([ ]):
+
+    def GetSitter(string sitter_id):
+        # Get 
+
+
+    def AddSitting(): 
+        # If no score Compute the score,  save to db and  return to user 
+        # Not implemented 
+
+    
+    def 
+
+    # Crud action
+    # def update(sitter): 
+
+    # def delete():
+    # unimplemented 
+
+# Class Score Caluclator 
+# Make this just a function
     def overall_score_calculator(self):
         for sitter in self.sitters.keys():
             self.profile_score_calculator(sitter)

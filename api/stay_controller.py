@@ -1,15 +1,20 @@
-from collections import defaultdict
 import csv
-from owner import Owner
-from sitter import Sitter
-from stay import Stay
+import sys
+from collections import defaultdict
+import sys
+sys.path.append(r"C:\Users\shrey\SearchRanking")
+from models.owner import Owner
+from models.sitter import Sitter 
+from models.stay import Stay 
+from models.dog import Dog
 
 class StayController:
 
-    def __init__(self, owners=defaultdict(Owner), sitters=defaultdict(Sitter), stays=defaultdict(Stay)):
+    def __init__(self, owners=defaultdict(Owner), sitters=defaultdict(Sitter), stays=defaultdict(Stay), dogs = defaultdict(Dog)):
         self.owners = owners
         self.sitters = sitters
         self.stays = stays
+        self.dogs = dogs
 
     def readCSV(self):
         with open(r'C:\Users\shrey\rover\static_data\reviews.csv', newline='') as f:
@@ -59,5 +64,8 @@ class StayController:
                 current_sitter.stays.append(current_stay)
                 self.sitters[sitter_email] = current_sitter
         return [self.owners, self.sitters, self.stays]
+
+
+
 
 
