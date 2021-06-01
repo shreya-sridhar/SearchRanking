@@ -1,7 +1,6 @@
 import csv
 import sys
 from collections import defaultdict
-import sys
 sys.path.append(r"C:\Users\shrey\SearchRanking")
 from models.owner import Owner
 from models.sitter import Sitter 
