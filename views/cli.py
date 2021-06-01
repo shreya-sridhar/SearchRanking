@@ -1,5 +1,7 @@
 import click
-from calculations import ReadCSV
+import sys
+sys.path.append(r"C:\Users\shrey\SearchRanking")
+from controllers.sitter_controller import SitterController
 
 @click.command()
 def opener():
@@ -22,14 +24,16 @@ def validateUserInput(user_choice):
 
     runUserAction(user_choice)
 
+
 def runUserAction(user_choice):
     if user_choice == 'X' or user_choice == 'x':
         click.Abort()
 
     if user_choice == 'Y' or user_choice == 'y':
         print("hello")
-        read_csv = ReadCSV()
-        read_csv.exportCSV()
+        s = SitterController()
+        s.overall_score_calculator()
+
 
 if __name__ == '__main__':
     opener()

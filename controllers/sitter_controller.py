@@ -8,20 +8,31 @@ class SitterController:
     def __init__(self):
         self.datastore = DataStore()
         self.datastore.ReadCSV()
-    # def listAllSitters([ ]):
-    #     # order it by score, email_id
-    #     # dog ='Barbarian'
-    #     # location =''
-    #     #
+   
+    def getAllSitters(self):
+        return list(self.datastore.GetAllSitters().values())
 
-    # def listAllSitters([ ]):
+    def setSitter(self,sitter_email,profile_score,ratings_score,search_score):
+        return self.datastore.SetSitter(sitter_email,profile_score,ratings_score,search_score)
 
-    # def GetSitter(string sitter_id):
-    #     # Get
+    def AddSitting(self):
+        return
+        # If no score Compute the score,  save to db and  return to user
+        # Not implemented 
+    
+    def exportSitters(self):
+        sitters = self.getAllSitters()
+        # field_names= ['email','name','profile_score','ratings_score','search_score']
+        # with open('sitters.csv', 'w') as csvfile:
+        #     writer = csv.DictWriter(csvfile, fieldnames=field_names)
+        #     writer.writeheader()
+        #     writer.writerows(output)
 
-    # def AddSitting():
-    #     # If no score Compute the score,  save to db and  return to user
-    #     # Not implemented
+        with open('data.csv', 'w',) as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(['email', 'name','profile_score','ratings_score','search_score'])
+            for sitter in sitters:
+                writer.writerow([sitter.sitter_email,sitter.sitter,sitter.profile_score,sitter.ratings_score,sitter.search_score])
 
     # def
 
@@ -31,15 +42,14 @@ class SitterController:
     # def delete():
     # unimplemented
 
-    # Class Score Caluclator
-    # Make this just a function
     def overall_score_calculator(self):
-        for sitter in list(self.datastore.GetAllSitters().values()):
+        for sitter in self.getAllSitters():
             profile_score = self.profile_score_calculator(sitter)
             ratings_score = self.ratings_score_calculator(sitter)
             search_score = self.search_score_calculator(
                 sitter, profile_score, ratings_score)
-            print(profile_score, ratings_score)
+            self.setSitter(sitter.sitter_email,profile_score,ratings_score,search_score)
+            self.exportSitters()
 
     def profile_score_calculator(self, curr_sitter):
         # calculates & updates sitter object with profile score
@@ -56,14 +66,12 @@ class SitterController:
 
     def ratings_score_calculator(self, curr_sitter):
         # calculates & updates sitter object with ratings score
-        stays = list(self.datastore.GetAllStays().values())
+        stays = curr_sitter.stays
         total_ratings = 0
         count_ratings = 0
         for stay in stays:
-            # print(stay,"fow")
-            if stay.sitter == curr_sitter:
-                count_ratings += 1
-                total_ratings += float(stay.rating)
+            count_ratings += 1
+            total_ratings += float(stay.rating)
         if total_ratings == 0 and count_ratings == 0:
             return 0
         return total_ratings/count_ratings
@@ -72,9 +80,15 @@ class SitterController:
         # When a sitter has no stays, their Search Score is equal to the Profile Score. When a sitter has 10 or more
         # stays, their Search Score is equal to the Ratings Score. The idea is that as a sitter gets more reviews, we will weigh the
         # Ratings Score more heavily.
+        stays = sitter.stays
+        if len(stays) == 0:
+            return profile_score
+        if len(stays) >= 10:
+            return ratings_score
+        else:
+            return len(stays)/10*ratings_score + (1-len(stays)/10)*profile_score
 
-        return
+# s = SitterController()
+# s.overall_score_calculator()
 
 
-s = SitterController()
-s.overall_score_calculator()
