@@ -61,9 +61,6 @@ class TestProfileScore(unittest.TestCase):
                         "harry.potter@gmail.com", [], 0, 0, 0)
         self.assertEqual(self.controllers.profile_score_calculator(sitter), 0)
         return
-    
-
-
 
 test_profile_scores = TestProfileScore()
 test_profile_scores.testAllProfileScores()

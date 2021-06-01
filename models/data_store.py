@@ -53,14 +53,6 @@ class DataStore:
                 # Iterate over each row after the header in the csv
                 id = 0
                 for row in data:
-                    # row variable is a list that represents a row in csv
-                    # print(row)
-
-                    # with open(r'C:\Users\shrey\SearchRanking\db\reviews.csv', newline='') as f:
-                    #     reader = csv.reader(f)
-                    #     data = list(reader)
-                    # id = 0
-                    # for row in data:
                     owner = row[7]
                     owner_image = row[4]
                     owner_phone_number = row[11]

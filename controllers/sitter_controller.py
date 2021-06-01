@@ -16,17 +16,15 @@ class SitterController:
         return self.datastore.SetSitter(sitter_email,profile_score,ratings_score,search_score)
 
     def AddSitting(self):
-        return
-        # If no score Compute the score,  save to db and  return to user
+        # If no score compute the score,  save to db and  return to user
         # Not implemented 
+        return
     
     def exportSitters(self):
         sitters = self.getAllSitters()
-        # field_names= ['email','name','profile_score','ratings_score','search_score']
-        # with open('sitters.csv', 'w') as csvfile:
-        #     writer = csv.DictWriter(csvfile, fieldnames=field_names)
-        #     writer.writeheader()
-        #     writer.writerows(output)
+        # list of Sitter objects
+        sitters.sort(key=lambda x: x.sitter)
+        sitters.sort(key=lambda x: x.search_score, reverse=True)
 
         with open('data.csv', 'w',) as csvfile:
             writer = csv.writer(csvfile)
@@ -34,21 +32,13 @@ class SitterController:
             for sitter in sitters:
                 writer.writerow([sitter.sitter_email,sitter.sitter,sitter.profile_score,sitter.ratings_score,sitter.search_score])
 
-    # def
-
-    # Crud action
-    # def update(sitter):
-
-    # def delete():
-    # unimplemented
-
     def overall_score_calculator(self):
         for sitter in self.getAllSitters():
             profile_score = self.profile_score_calculator(sitter)
             ratings_score = self.ratings_score_calculator(sitter)
             search_score = self.search_score_calculator(
                 sitter, profile_score, ratings_score)
-            self.setSitter(sitter.sitter_email,profile_score,ratings_score,search_score)
+            self.setSitter(sitter.sitter_email,round(profile_score,2),round(ratings_score,2),round(search_score,2))
             self.exportSitters()
 
     def profile_score_calculator(self, curr_sitter):
