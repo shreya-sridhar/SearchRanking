@@ -1,3 +1,7 @@
+'''
+row i change and make cleaner w constants
+
+'''
 import copy
 from typing import Dict
 from collections import defaultdict
@@ -9,13 +13,28 @@ from models.dog import Dog
 from models.sitter import Sitter
 from models.stay import Stay
 
+# TODO : make this class a DataStore class in python  
 class DataStore:
 
+    __shared_instance = 'central_datastore'
+  
+    @staticmethod
+    def getInstance():
+        """Static Access Method"""
+        if DataStore.__shared_instance == 'central_datastore':
+            DataStore()
+        return DataStore.__shared_instance
+  
     def __init__(self, owners: Dict[str, 'Owner'] = {}, sitters: Dict[str, 'Sitter'] = {}, stays: Dict[str, Stay] = {}, dogs: Dict[str, Dog] = {}):
         self.owners = owners
         self.sitters = sitters
         self.stays = stays
         self.dogs = dogs
+        """virtual private constructor"""
+        if DataStore.__shared_instance != 'central_datastore':
+            raise Exception ("This class is a DataStore class !")
+        else:
+            DataStore.__shared_instance = self
 
     def GetAllOwners(self):
         return self.owners
@@ -43,8 +62,9 @@ class DataStore:
         sitter.ratings_score = ratings_score
         sitter.search_score = search_score
 
+    # TODO : make this private method
     def ReadCSV(self):
-
+        # TODO : use relative Path
         with open(r'C:\Users\shrey\SearchRanking\db\reviews.csv', 'r') as read_obj:
             data = csv.reader(read_obj)
             header = next(data)
@@ -53,6 +73,8 @@ class DataStore:
                 # Iterate over each row after the header in the csv
                 id = 0
                 for row in data:
+                    # TODO: move to a different function
+                    # TODO: use validate methods 
                     owner = row[7]
                     owner_image = row[4]
                     owner_phone_number = row[11]
@@ -84,6 +106,7 @@ class DataStore:
                     current_stay = Stay(stay_id, rating, end_date, text,
                                         dogs, start_date, response_time_minutes)
                     self.stays[stay_id] = current_stay
+                    # TOdo : Add comment here and discuss alternatives 
                     id += 1
                     self.owners[owner_email] = current_owner
                     self.sitters[sitter_email] = current_sitter
@@ -92,13 +115,6 @@ class DataStore:
                     self.stays[stay_id].sitter = self.sitters[sitter_email]
                     self.owners[owner_email].stays = self.owners[owner_email].stays[:] + [self.stays[stay_id]]
                     self.sitters[sitter_email].stays = self.sitters[sitter_email].stays[:] + [self.stays[stay_id]]
-
-# d = DataStore()
-# d.ReadCSV()
-
-
-
-
 
 
 

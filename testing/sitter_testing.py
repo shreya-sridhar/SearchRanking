@@ -12,6 +12,10 @@ class TestProfileScore(unittest.TestCase):
     def __init__(self):
         self.controllers = SitterController()
 
+    def testGetProfileScoresWithSameletter(self):
+        self.same_letters_test()
+
+
     def testAllProfileScores(self):
         self.same_letters_test()
         self.distinct_letters_test()

@@ -4,6 +4,7 @@ class Sitter:
 
     def __init__(self, sitter_id: int, sitter: str, sitter_image: str, sitter_phone_number: int, sitter_email: str, stays: list('Stay') = [], profile_score: float = 0, ratings_score: float = 0, search_score: float = 0):
         self.sitter_id = sitter_id
+        # TODO : Use ID 
         # assuming sitter_id is the sitter phone number since it's unique
         self.sitter = sitter
         self.sitter_image = sitter_image
