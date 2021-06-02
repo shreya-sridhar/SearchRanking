@@ -1,7 +1,7 @@
 import unittest
 import sys
 import random
-sys.path.append(r"C:\Users\shrey\SearchRanking")
+sys.path.append(r"")
 from controllers.stay_controller import stay_controller
 from controllers.owner_controller import owner_controller
 from controllers.sitter_controller import sitter_controller
@@ -12,21 +12,17 @@ from models.stay import Stay
 
 class TestRatingsScore(unittest.TestCase):
 
-    def testAllRatingsScores(self):
-        self.stays_equals_zero()
-        self.stays_equals_ten()
-        self.stays_between_zero_and_ten()
-        self.stays_greater_than_ten()
-
     # when sitter has no stays
-    def stays_equals_zero(self):
+    def test_stays_equals_zero(self):
         sitter = sitter_controller.addSitter("Jim Harrison", "https://images.dog/dog1.jpg", 82345678, "jim.harrison@gmail.com")
         owner = owner_controller.GetOwner("user2555@verizon.net")
+        stays = []
+        sitter_controller.setSitter(sitter.sitter_email, 0, 0, 0, stays)
         self.assertEqual(round(sitter_controller.ratings_score_calculator(sitter), 2), 0)
         return sitter_controller.ratings_score_calculator(sitter)
 
     # # all distinct letters
-    def stays_between_zero_and_ten(self):
+    def test_stays_between_zero_and_ten(self):
         sitter = sitter_controller.addSitter(
             "Jim Harrison", "https://images.dog/dog1.jpg", 82345678, "jim.harrison@gmail.com")
         owner = owner_controller.GetOwner("user2555@verizon.net")
@@ -42,7 +38,7 @@ class TestRatingsScore(unittest.TestCase):
         return sitter_controller.ratings_score_calculator(sitter)
 
     # # combination of cases1&2
-    def stays_equals_ten(self):
+    def test_stays_equals_ten(self):
         sitter = sitter_controller.addSitter(
             "Jim Harrison", "https://images.dog/dog1.jpg", 82345678, "jim.harrison@gmail.com")
         owner = owner_controller.GetOwner("user2555@verizon.net")
@@ -57,7 +53,7 @@ class TestRatingsScore(unittest.TestCase):
             round(sitter_controller.ratings_score_calculator(sitter), 2), 1.78)
         return sitter_controller.ratings_score_calculator(sitter)
 
-    def stays_greater_than_ten(self):
+    def test_stays_greater_than_ten(self):
         sitter = sitter_controller.addSitter(
             "Jim Harrison", "https://images.dog/dog1.jpg", 82345678, "jim.harrison@gmail.com")
         owner = owner_controller.GetOwner("user2555@verizon.net")
@@ -73,7 +69,9 @@ class TestRatingsScore(unittest.TestCase):
         return sitter_controller.ratings_score_calculator(sitter)
 
 test_ratings_scores = TestRatingsScore()
-
+# test_ratings_scores.testAllRatingsScores()
+if __name__ == '__main__':
+    unittest.main()
 
 
 

@@ -1,6 +1,6 @@
 import csv
 import sys
-sys.path.append(r"C:\Users\shrey\SearchRanking")
+sys.path.append(r"")
 from models.owner import Owner
 from models.data_store import datastore
 

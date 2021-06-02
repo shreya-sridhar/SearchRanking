@@ -1,24 +1,22 @@
 import csv
 import sys
-sys.path.append(r"C:\Users\shrey\SearchRanking")
+sys.path.append(r"")
 from models.sitter import Sitter
 from models.data_store import datastore
 from typing import List
 
 class SitterController:
 
-    # TODO : When to not use caps
-    def getAllSitters(self) -> List['Sitter']:
+    def get_all_sitters(self) -> List['Sitter']:
         return list(datastore.sitters.values())
 
-    def GetSitter(self, email: str) -> 'Sitter':
+    def get_sitter(self, email: str) -> 'Sitter':
         for sitter in list(datastore.sitters.values()):
             if sitter.sitter_email == email:
                 return sitter
         return None
 
-    def setSitter(self, sitter_email: str, profile_score: float = 0, ratings_score: float = 0, search_score: float =0,stays:List['Stay'] = []):
-        # tODO : Validate data
+    def set_sitter(self, sitter_email: str, profile_score: float = 0, ratings_score: float = 0, search_score: float =0,stays:List['Stay'] = []):
         for curr_sitter in list(datastore.sitters.values()):
             if curr_sitter.sitter_email == sitter_email:
                 sitter = curr_sitter
@@ -27,7 +25,7 @@ class SitterController:
         sitter.search_score = search_score
         sitter.stays = stays
 
-    def addSitter(self, sitter: str, sitter_image: str, sitter_phone_number: int, sitter_email: str) -> 'Sitter':
+    def add_sitter(self, sitter: str, sitter_image: str, sitter_phone_number: int, sitter_email: str) -> 'Sitter':
         if not self.GetSitter(sitter_email):
             count_sitters = len(datastore.sitters)
             sitter = Sitter(count_sitters, sitter, sitter_image,
@@ -37,10 +35,10 @@ class SitterController:
             return sitter
         return self.GetSitter(sitter_email)
 
-    def exportSittersToCsv(self):
-        headers = ['email', 'name', 'profile_score',
-                   'ratings_score', 'search_score']
-        sitters = self.getAllSitters()
+    def export_sitters_to_csv(self):
+        headers = ['email', 'name', 'profile_score','
+        ratings_score', 'search_score']
+        sitters = self.get_all_sitters()
         # list of Sitter objects
         sitters.sort(key=lambda x: x.sitter)
         sitters.sort(key=lambda x: x.search_score, reverse=True)
@@ -55,14 +53,13 @@ class SitterController:
                                 sitter.profile_score, sitter.ratings_score, sitter.search_score])
 
     def overall_score_calculator(self):
-        for sitter in self.getAllSitters():
+        for sitter in self.get_all_sitters():
             profile_score = self.profile_score_calculator(sitter)
             ratings_score = self.ratings_score_calculator(sitter)
-            search_score = self.search_score_calculator(
-                sitter, profile_score, ratings_score)
-            self.setSitter(sitter.sitter_email, round(profile_score, 2), round(
+            search_score = self.search_score_calculator(sitter, profile_score, ratings_score)
+            self.set_sitter(sitter.sitter_email, round(profile_score, 2), round(
                 ratings_score, 2), round(search_score, 2))
-            self.exportSittersToCsv()
+            self.export_sitters_to_csv()
 
     def profile_score_calculator(self, curr_sitter: 'Sitter') -> float:
         # calculates & updates sitter object with profile score
@@ -102,4 +99,5 @@ class SitterController:
             return round((ratings_score * len(stays)/10) + (profile_score * (1-len(stays)/10)),2)
 
 sitter_controller = SitterController()
+sitter_controller.overall_score_calculator()
 
