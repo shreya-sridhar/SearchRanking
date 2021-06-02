@@ -10,8 +10,9 @@ Following assumptions are considered in modelling relationships:
 
 5. Assuming you're always creating unique stays and not checking if stay already exists in the database
 
-6. Validation classes not implemented when data is being created/updated in Models
+6. Validation classes are defined in validations folder but not implemented when data is being created/updated in Models. Validation for phone number checks if number belongs only to the US.
 
 7. Dog class has been defined but dog objects not initialized during database creation
+
 
 
