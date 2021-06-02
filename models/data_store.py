@@ -8,6 +8,7 @@ from models.stay import Stay
 from models.sitter import Sitter
 from models.dog import Dog
 from models.owner import Owner
+from models.constants import *
 
 class DataStore:
 
@@ -33,7 +34,6 @@ class DataStore:
 
     # TODO : make this private method
     def ReadCSV(self):
-        headers = {"rating": 0, "sitter_image": 1, "end_date": 2, "text": 3, "owner_image": 4, "dogs": 5, "sitter": 6, "owner": 7,"start_date": 8, "sitter_phone_number": 9, "sitter_email": 10, "owner_phone_number": 11, "owner_email": 12, "response_time_minutes": 13}
         # TODO : use relative Path
         with open(r'C:\Users\shrey\SearchRanking\db\reviews.csv', 'r') as read_obj:
             data = csv.reader(read_obj)
@@ -46,20 +46,20 @@ class DataStore:
                     # TODO: move to a different function
                     # TODO: use validate methods
                     
-                    rating = row[headers["rating"]]
-                    sitter_image = row[headers["sitter_image"]]
-                    end_date = row[headers["end_date"]]
-                    text = row[headers["text"]]    
-                    owner_image = row[headers["owner_image"]]
-                    dogs = row[headers["dogs"]]
-                    sitter = row[headers["sitter"]]
-                    owner = row[headers["owner"]]
-                    start_date = row[headers["start_date"]]
-                    sitter_phone_number = row[headers["sitter_phone_number"]]
-                    sitter_email = row[headers["sitter_email"]]
-                    owner_phone_number = row[headers["owner_phone_number"]]
-                    owner_email = row[headers["owner_email"]]
-                    response_time_minutes = row[headers["response_time_minutes"]]
+                    rating = row[RATING_INDEX]
+                    sitter_image = row[SITTER_IMAGE_INDEX]
+                    end_date = row[END_DATE_INDEX]
+                    text = row[TEXT_INDEX]    
+                    owner_image = row[OWNER_IMAGE_INDEX]
+                    dogs = row[DOGS_INDEX]
+                    sitter = row[SITTER_INDEX]
+                    owner = row[OWNER_INDEX]
+                    start_date = row[START_DATE_INDEX]
+                    sitter_phone_number = row[SITTER_PHONE_NUMBER_INDEX]
+                    sitter_email = row[SITTER_EMAIL_INDEX]
+                    owner_phone_number = row[OWNER_PHONE_NUMBER_INDEX]
+                    owner_email = row[OWNER_EMAIL_INDEX]
+                    response_time_minutes = row[RESPONSE_TIME_MINUTES_INDEX]
 
                     if owner_email not in self.owners:
                         # Owner does not already exist in database so add a new Owner
@@ -88,6 +88,7 @@ class DataStore:
                         self.sitters[sitter_id] = current_sitter
                     else:
                         sitter_id = current_sitter.sitter_id
+
                     # establishing relationship between stays, owners & sitters. A stay belongs to a single owner and sitter. A sitter can have many stays and an owner can have many stays
                     current_stay.owner = self.owners[owner_id]
                     current_stay.sitter = self.sitters[sitter_id]
