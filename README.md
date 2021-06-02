@@ -109,7 +109,7 @@ b. Schema - takes a input parameter of id, corresponding to the sitter and ratin
  
 Example - /sitter?id=606&rating=4
  
-In real world scenarios, the ratings scores will be re-calculated in background jobs and factored into sitter rating only when the rating is deemed legit (using machine learning modelling which eliminates skewed ratings & bad players).
+In real world scenarios, the ratings scores will be re-calculated in background jobs and factored into sitter rating only when the rating is deemed legit (using data modelling or machine learning to eliminate skewed ratings & bad players).
  
  
  
