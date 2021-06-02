@@ -5,11 +5,11 @@
 3. Navigate to views/cli.py and run. 
 4. The user is asked if they want to download csv. On selecting "Yes", output.csv is generated. 
  
-### Q. Describe how you would approach API design for a backend service to provide sitter and rank data to a client/web frontend
+#### Q. Describe how you would approach API design for a backend service to provide sitter and rank data to a client/web frontend
  
 The API to provide sitter and rank data can be summarized as. 
  
-#### GET Requests:
+##### GET Requests:
  
 1. getallsitters (corresponding to index action) - Request for list of sitters filtered by input criteria 
  
@@ -93,7 +93,7 @@ output : JSON of a single Sitter object with various sitter attributes including
     }\
 ]\
  
-#### POST Requests:
+##### POST Requests:
  
 When a stay is completed, the rating & reviews will be sent as a POST api request with corresponding sitter_id as parameter, thereby updating their ratings for the stay.
  
