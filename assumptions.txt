@@ -12,7 +12,7 @@ Following assumptions are considered in modelling relationships:
 
 6. Validation classes are defined in validations folder but not implemented when data is being created/updated in Models. Validation for phone number checks if number belongs only to the US.
 
-7. Dog class has been defined but dog objects not initialized during database creation
+7. Dog class has been defined but dog objects not initialized during database creation (after reading csv) 
 
 
 
