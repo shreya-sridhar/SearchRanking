@@ -6,5 +6,7 @@ Following assumptions are considered in modelling relationships:
 
 2. A dog could belong to multiple owners, but we only consider that a dog belongs to a single owner
 
+3. AddSitter method initializes a Sitter in our database and requires these parameters - sitter, sitter_image, sitter_phone_number,sitter_email
 
+4. Response Time of Sitter is taken as -1 while a new Stay object is beign created
 
