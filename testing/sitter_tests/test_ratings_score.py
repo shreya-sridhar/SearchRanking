@@ -1,67 +1,80 @@
 import unittest
 import sys
+import random
 sys.path.append(r"C:\Users\shrey\SearchRanking")
-from models.stay import Stay
-from models.sitter import Sitter
-from models.dog import Dog
-from models.owner import Owner
-from controllers.sitter_controller import sitter_controller
-from controllers.owner_controller import owner_controller
 from controllers.stay_controller import stay_controller
+from controllers.owner_controller import owner_controller
+from controllers.sitter_controller import sitter_controller
+from models.owner import Owner
+from models.dog import Dog
+from models.sitter import Sitter
+from models.stay import Stay
 
 class TestRatingsScore(unittest.TestCase):
 
     def testAllRatingsScores(self):
         self.stays_equals_zero()
-        # self.stays_equals_ten()
-        # self.stays_between_zero_and_ten()
-        # self.stays_greater_than_ten()
+        self.stays_equals_ten()
+        self.stays_between_zero_and_ten()
+        self.stays_greater_than_ten()
 
     # when sitter has no stays
     def stays_equals_zero(self):
-        sitter = sitter_controller.addSitter("Jim", "https://images.dog/dog1.jpg", 82345678, "zz35z.abc@gmail.com")[1]
+        sitter = sitter_controller.addSitter("Jim Harrison", "https://images.dog/dog1.jpg", 82345678, "jim.harrison@gmail.com")
         owner = owner_controller.GetOwner("user2555@verizon.net")
-        stay1 = stay_controller.AddStay(6/5/2021, "hello there!", [], 6/2/2021, owner, sitter)[1]
-        stay1_rated = stay_controller.AddRatingForStay(stay1, 5)
-        sitter_controller.setSitter(sitter.sitter_email, 0, 0, 0, [stay1_rated])
-        self.assertEqual(
-            round(sitter_controller.ratings_score_calculator(sitter), 2), 5.0)
+        self.assertEqual(round(sitter_controller.ratings_score_calculator(sitter), 2), 0)
+        return sitter_controller.ratings_score_calculator(sitter)
 
     # # all distinct letters
-    def distinct_letters_test(self):
+    def stays_between_zero_and_ten(self):
         sitter = sitter_controller.addSitter(
-            "riley jackson", "https://images.dog/dog2.jpg", 22345678, "riley.jackson@gmail.com")[1]
+            "Jim Harrison", "https://images.dog/dog1.jpg", 82345678, "jim.harrison@gmail.com")
+        owner = owner_controller.GetOwner("user2555@verizon.net")
+        stays = []
+        for i in range(5):
+            stay = stay_controller.AddStay(
+                6/5/2021+i, "hello there!", [], 6/2/2021+i, owner, sitter)[1]
+            stay_rated = stay_controller.AddRatingForStay(stay, i % 5)
+            stays.append(stay)
+        sitter_controller.setSitter(sitter.sitter_email, 0, 0, 0, stays)
         self.assertEqual(
-            round(sitter_controller.profile_score_calculator(sitter), 2), 2.31)
+            round(sitter_controller.ratings_score_calculator(sitter), 2), 2)
+        return sitter_controller.ratings_score_calculator(sitter)
 
     # # combination of cases1&2
-    def mixed_letters_test(self):
+    def stays_equals_ten(self):
         sitter = sitter_controller.addSitter(
-            "casey sanders", "https://images.dog/dog3.jpg", 32345678, "casey.sanders@gmail.com")[1]
+            "Jim Harrison", "https://images.dog/dog1.jpg", 82345678, "jim.harrison@gmail.com")
+        owner = owner_controller.GetOwner("user2555@verizon.net")
+        stays = []
+        for i in range(9):
+            stay = stay_controller.AddStay(
+                6/5/2021+i, "hello there!", [], 6/2/2021+i, owner, sitter)[1]
+            stay_rated = stay_controller.AddRatingForStay(stay, i % 5)
+            stays.append(stay)
+        sitter_controller.setSitter(sitter.sitter_email, 0, 0, 0, stays)
         self.assertEqual(
-            round(sitter_controller.profile_score_calculator(sitter), 2), 1.54)
+            round(sitter_controller.ratings_score_calculator(sitter), 2), 1.78)
+        return sitter_controller.ratings_score_calculator(sitter)
 
-    # # null name
-    def zero_letters_test(self):
+    def stays_greater_than_ten(self):
         sitter = sitter_controller.addSitter(
-            "", "https://images.dog/dog4.jpg", 44345678, "xyzhge.abcdef@gmail.com")[1]
+            "Jim Harrison", "https://images.dog/dog1.jpg", 82345678, "jim.harrison@gmail.com")
+        owner = owner_controller.GetOwner("user2555@verizon.net")
+        stays = []
+        for i in range(16):
+            stay = stay_controller.AddStay(
+                6/5/2021+i, "hello there!", [], 6/2/2021+i, owner, sitter)[1]
+            stay_rated = stay_controller.AddRatingForStay(stay, i % 5)
+            stays.append(stay)
+        sitter_controller.setSitter(sitter.sitter_email, 0, 0, 0, stays)
         self.assertEqual(
-            round(sitter_controller.profile_score_calculator(sitter), 2), 0)
-
-    # # name containing special characters like .
-    def special_chars_test(self):
-        sitter = sitter_controller.addSitter(
-            "samuel p. jones", "https://images.dog/dog5.jpg", 52345678, "samuel.jones@gmail.com")[1]
-        self.assertEqual(
-            round(sitter_controller.profile_score_calculator(sitter), 2), 1.92)
-
-    # # name in upper and lower cases
-    def cased_letters_test(self):
-        sitter = sitter_controller.addSitter(
-            "Harry Potter", "https://images.dog/dog6.jpg", 62345678, "harry.potter@gmail.com")[1]
-        self.assertEqual(
-            round(sitter_controller.profile_score_calculator(sitter), 2), 1.54)
-
+            round(sitter_controller.ratings_score_calculator(sitter), 2), 1.88)
+        return sitter_controller.ratings_score_calculator(sitter)
 
 test_ratings_scores = TestRatingsScore()
-test_ratings_scores.testAllRatingsScores()
+
+
+
+
+

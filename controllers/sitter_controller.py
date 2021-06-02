@@ -8,14 +8,14 @@ from typing import List
 class SitterController:
 
     # TODO : When to not use caps
-    def getAllSitters(self):
+    def getAllSitters(self) -> List['Sitter']:
         return list(datastore.sitters.values())
 
-    def GetSitter(self, email: str):
+    def GetSitter(self, email: str) -> 'Sitter':
         for sitter in list(datastore.sitters.values()):
             if sitter.sitter_email == email:
                 return sitter
-            return None
+        return None
 
     def setSitter(self, sitter_email: str, profile_score: float = 0, ratings_score: float = 0, search_score: float =0,stays:List['Stay'] = []):
         # tODO : Validate data
@@ -27,15 +27,15 @@ class SitterController:
         sitter.search_score = search_score
         sitter.stays = stays
 
-    def addSitter(self, sitter: str, sitter_image: str, sitter_phone_number: int, sitter_email: str):
+    def addSitter(self, sitter: str, sitter_image: str, sitter_phone_number: int, sitter_email: str) -> 'Sitter':
         if not self.GetSitter(sitter_email):
             count_sitters = len(datastore.sitters)
             sitter = Sitter(count_sitters, sitter, sitter_image,
                             sitter_phone_number, sitter_email)
             datastore.sitters[count_sitters] = sitter
         # sitter has to be initialized with sitter (name), image, phone and email
-            return [True, sitter]
-        return [False, None]
+            return sitter
+        return self.GetSitter(sitter_email)
 
     def exportSittersToCsv(self):
         headers = ['email', 'name', 'profile_score',
@@ -64,7 +64,7 @@ class SitterController:
                 ratings_score, 2), round(search_score, 2))
             self.exportSittersToCsv()
 
-    def profile_score_calculator(self, curr_sitter: 'Sitter'):
+    def profile_score_calculator(self, curr_sitter: 'Sitter') -> float:
         # calculates & updates sitter object with profile score
         sitter_name = curr_sitter.sitter
         distinct_chars = set()
@@ -77,7 +77,7 @@ class SitterController:
         # O(n) time, space complexity where n is len(sitter_name)
         return profile_score_val
 
-    def ratings_score_calculator(self, curr_sitter: 'Sitter'):
+    def ratings_score_calculator(self, curr_sitter: 'Sitter') -> float:
         # calculates & updates sitter object with ratings score
         stays = curr_sitter.stays
         total_ratings = 0
@@ -89,7 +89,7 @@ class SitterController:
             return 0
         return total_ratings/count_ratings
 
-    def search_score_calculator(self, sitter: 'Sitter', profile_score: float, ratings_score: float):
+    def search_score_calculator(self, sitter: 'Sitter', profile_score: float, ratings_score: float) -> float:
         stays = sitter.stays
         # When a sitter has no stays, their Search Score is equal to the Profile Score.
         if len(stays) == 0:
@@ -99,7 +99,7 @@ class SitterController:
             return ratings_score
         # As a sitter gets more reviews, we will weigh the Ratings Score more heavily.
         else:
-            return len(stays)/10*ratings_score + (1-len(stays)/10)*profile_score
-
+            return round((ratings_score * len(stays)/10) + (profile_score * (1-len(stays)/10)),2)
 
 sitter_controller = SitterController()
+
