@@ -33,7 +33,7 @@ class DataStore:
         else:
             DataStore.__shared_instance = self
 
-    # private method
+    '''private methods'''
     def _find_or_create_owner(self,id:int,owner:str, owner_image:str, owner_phone_number: int, owner_email:str) -> int:
         # Checking if owner already exists in database
         owner_present = False 
@@ -55,7 +55,7 @@ class DataStore:
             if iter_sitter.sitter_email == sitter_email:
                 current_sitter = iter_sitter 
                 sitter_present = True
-            # Sitter does not already exist in database so add a new Sitter
+        # Sitter does not already exist in database so add a new Sitter
         if not sitter_present:
             current_sitter = Sitter(id, sitter, sitter_image, sitter_phone_number, sitter_email)
         sitter_id = current_sitter.sitter_id
@@ -80,7 +80,7 @@ class DataStore:
         return rating,sitter_image,end_date,text,owner_image,dogs, sitter, owner, start_date, sitter_phone_number, sitter_email, owner_phone_number, owner_email, response_time_minutes
 
     def _read_csv(self):
-        with open(r'db\reviews.csv', 'r') as read_obj:
+        with open(REVIEWS_PATH) as read_obj:
             data = csv.reader(read_obj)
             header = next(data)
             if header != None:
@@ -107,6 +107,9 @@ class DataStore:
 
 datastore = DataStore()
 datastore._read_csv()
+
+
+
 
 
 

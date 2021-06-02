@@ -21,7 +21,7 @@ class TestSearchScore(unittest.TestCase):
         sitter = sitter_controller.GetSitter("jim.harrison@gmail.com")
         self.assertEqual(round(sitter_controller.search_score_calculator(sitter, profile_score, ratings_score), 2), 1.73)
 
-    # # all distinct letters
+    # sitters has greater then 0 and less than 10 stays
     def stays_between_zero_and_ten(self):
         profile_score = TestProfileScore.test_mixed_letters()
         ratings_score = TestRatingsScore.test_stays_between_zero_and_ten()
@@ -29,7 +29,7 @@ class TestSearchScore(unittest.TestCase):
         self.assertEqual(
             round(sitter_controller.search_score_calculator(sitter, profile_score, ratings_score), 2), 1.87)
 
-    # # combination of cases1&2
+    # sitter has 10 stays
     def stays_equals_ten(self):
         profile_score = TestProfileScore.test_mixed_letters()
         ratings_score = TestRatingsScore.test_stays_equals_ten()
@@ -37,6 +37,7 @@ class TestSearchScore(unittest.TestCase):
         self.assertEqual(
             round(sitter_controller.search_score_calculator(sitter, profile_score, ratings_score), 2), 1.77)
 
+    # sitter has more than 10 stays
     def stays_greater_than_ten(self):
         profile_score = TestProfileScore.test_mixed_letters()
         ratings_score = TestRatingsScore.test_stays_greater_than_ten()

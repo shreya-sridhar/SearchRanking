@@ -2,8 +2,6 @@ Following assumptions are considered in modelling relationships:
 
 1. I assume that a owner always sends all their dogs for a stay as opposed to only some of their dogs
 
-{some validation}
-
 2. A dog could belong to multiple owners, but we only consider that a dog belongs to a single owner
 
 3. AddSitter method initializes a Sitter in our database and requires these parameters - sitter, sitter_image, sitter_phone_number,sitter_email
@@ -12,5 +10,8 @@ Following assumptions are considered in modelling relationships:
 
 5. Assuming you're always creating unique stays and not checking if stay already exists in the database
 
+6. Validation classes not implemented when data is being created/updated in Models
+
+7. Dog class has been defined but dog objects not initialized during database creation
 
 

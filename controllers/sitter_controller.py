@@ -26,31 +26,14 @@ class SitterController:
         sitter.stays = stays
 
     def add_sitter(self, sitter: str, sitter_image: str, sitter_phone_number: int, sitter_email: str) -> 'Sitter':
-        if not self.GetSitter(sitter_email):
+        if not self.get_sitter(sitter_email):
             count_sitters = len(datastore.sitters)
             sitter = Sitter(count_sitters, sitter, sitter_image,
                             sitter_phone_number, sitter_email)
             datastore.sitters[count_sitters] = sitter
         # sitter has to be initialized with sitter (name), image, phone and email
             return sitter
-        return self.GetSitter(sitter_email)
-
-    def export_sitters_to_csv(self):
-        headers = ['email', 'name', 'profile_score','
-        ratings_score', 'search_score']
-        sitters = self.get_all_sitters()
-        # list of Sitter objects
-        sitters.sort(key=lambda x: x.sitter)
-        sitters.sort(key=lambda x: x.search_score, reverse=True)
-
-        # Use custom user provided name
-        with open('data.csv', 'w',) as csvfile:
-            writer = csv.writer(csvfile)
-            # todo ; Define output format in constant
-            writer.writerow(headers)
-            for sitter in sitters:
-                writer.writerow([sitter.sitter_email, sitter.sitter,
-                                sitter.profile_score, sitter.ratings_score, sitter.search_score])
+        return self.get_sitter(sitter_email)
 
     def overall_score_calculator(self):
         for sitter in self.get_all_sitters():
@@ -59,7 +42,7 @@ class SitterController:
             search_score = self.search_score_calculator(sitter, profile_score, ratings_score)
             self.set_sitter(sitter.sitter_email, round(profile_score, 2), round(
                 ratings_score, 2), round(search_score, 2))
-            self.export_sitters_to_csv()
+            self._export_sitters_to_csv()
 
     def profile_score_calculator(self, curr_sitter: 'Sitter') -> float:
         # calculates & updates sitter object with profile score
@@ -97,6 +80,23 @@ class SitterController:
         # As a sitter gets more reviews, we will weigh the Ratings Score more heavily.
         else:
             return round((ratings_score * len(stays)/10) + (profile_score * (1-len(stays)/10)),2)
+
+    '''private methods ''' 
+    def _export_sitters_to_csv(self):
+        headers = ['email', 'name', 'profile_score','ratings_score', 'search_score']
+        sitters = self.get_all_sitters()
+        # list of Sitter objects
+        sitters.sort(key=lambda x: x.sitter)
+        sitters.sort(key=lambda x: x.search_score, reverse=True)
+
+        # Use custom user provided name
+        with open('output.csv', 'w',) as csvfile:
+            writer = csv.writer(csvfile)
+            # todo ; Define output format in constant
+            writer.writerow(headers)
+            for sitter in sitters:
+                writer.writerow([sitter.sitter_email, sitter.sitter,
+                                sitter.profile_score, sitter.ratings_score, sitter.search_score])
 
 sitter_controller = SitterController()
 sitter_controller.overall_score_calculator()

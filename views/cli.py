@@ -25,7 +25,7 @@ def runUserAction(user_choice):
         click.Abort()
 
     if user_choice == 'Y' or user_choice == 'y':
-        print("hello")
+        print("Output file generated! (output.csv)")
         s = SitterController()
         s.overall_score_calculator()
 

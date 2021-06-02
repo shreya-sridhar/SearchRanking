@@ -10,7 +10,7 @@ from models.data_store import datastore
 
 class DogController:
 
-    def GetDog(self):
+    def get_dog(self):
         return list(datastore.dogs.values())
     # not implemented
 

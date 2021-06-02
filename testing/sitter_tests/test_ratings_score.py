@@ -14,56 +14,57 @@ class TestRatingsScore(unittest.TestCase):
 
     # when sitter has no stays
     def test_stays_equals_zero(self):
-        sitter = sitter_controller.addSitter("Jim Harrison", "https://images.dog/dog1.jpg", 82345678, "jim.harrison@gmail.com")
-        owner = owner_controller.GetOwner("user2555@verizon.net")
+        sitter = sitter_controller.add_sitter("Jim Harrison", "https://images.dog/dog1.jpg", 82345678, "jim.harrison@gmail.com")
+        owner = owner_controller.get_owner("user2555@verizon.net")
         stays = []
-        sitter_controller.setSitter(sitter.sitter_email, 0, 0, 0, stays)
+        sitter_controller.set_sitter(sitter.sitter_email, 0, 0, 0, stays)
         self.assertEqual(round(sitter_controller.ratings_score_calculator(sitter), 2), 0)
         return sitter_controller.ratings_score_calculator(sitter)
 
-    # # all distinct letters
+    # sitter has greater than 0 and less than 10 stays
     def test_stays_between_zero_and_ten(self):
-        sitter = sitter_controller.addSitter(
+        sitter = sitter_controller.add_sitter(
             "Jim Harrison", "https://images.dog/dog1.jpg", 82345678, "jim.harrison@gmail.com")
-        owner = owner_controller.GetOwner("user2555@verizon.net")
+        owner = owner_controller.get_owner("user2555@verizon.net")
         stays = []
         for i in range(5):
-            stay = stay_controller.AddStay(
-                6/5/2021+i, "hello there!", [], 6/2/2021+i, owner, sitter)[1]
-            stay_rated = stay_controller.AddRatingForStay(stay, i % 5)
+            stay = stay_controller.add_stay(
+                6/5/2021+i, "hello there!", [], 6/2/2021+i, owner, sitter)
+            stay_rated = stay_controller.add_rating_for_stay(stay, i % 5)
             stays.append(stay)
-        sitter_controller.setSitter(sitter.sitter_email, 0, 0, 0, stays)
+        sitter_controller.set_sitter(sitter.sitter_email, 0, 0, 0, stays)
         self.assertEqual(
             round(sitter_controller.ratings_score_calculator(sitter), 2), 2)
         return sitter_controller.ratings_score_calculator(sitter)
 
-    # # combination of cases1&2
+    # sitter has 10 stays
     def test_stays_equals_ten(self):
-        sitter = sitter_controller.addSitter(
+        sitter = sitter_controller.add_sitter(
             "Jim Harrison", "https://images.dog/dog1.jpg", 82345678, "jim.harrison@gmail.com")
-        owner = owner_controller.GetOwner("user2555@verizon.net")
+        owner = owner_controller.get_owner("user2555@verizon.net")
         stays = []
         for i in range(9):
-            stay = stay_controller.AddStay(
-                6/5/2021+i, "hello there!", [], 6/2/2021+i, owner, sitter)[1]
-            stay_rated = stay_controller.AddRatingForStay(stay, i % 5)
+            stay = stay_controller.add_stay(
+                6/5/2021+i, "hello there!", [], 6/2/2021+i, owner, sitter)
+            stay_rated = stay_controller.add_rating_for_stay(stay, i % 5)
             stays.append(stay)
-        sitter_controller.setSitter(sitter.sitter_email, 0, 0, 0, stays)
+        sitter_controller.set_sitter(sitter.sitter_email, 0, 0, 0, stays)
         self.assertEqual(
             round(sitter_controller.ratings_score_calculator(sitter), 2), 1.78)
         return sitter_controller.ratings_score_calculator(sitter)
 
+    # sitter has greater than 10 stays
     def test_stays_greater_than_ten(self):
-        sitter = sitter_controller.addSitter(
+        sitter = sitter_controller.add_sitter(
             "Jim Harrison", "https://images.dog/dog1.jpg", 82345678, "jim.harrison@gmail.com")
-        owner = owner_controller.GetOwner("user2555@verizon.net")
+        owner = owner_controller.get_owner("user2555@verizon.net")
         stays = []
         for i in range(16):
-            stay = stay_controller.AddStay(
-                6/5/2021+i, "hello there!", [], 6/2/2021+i, owner, sitter)[1]
-            stay_rated = stay_controller.AddRatingForStay(stay, i % 5)
+            stay = stay_controller.add_stay(
+                 6/5/2021+i, "hello there!", [], 6/2/2021+i, owner, sitter)
+            stay_rated = stay_controller.add_rating_for_stay(stay, i % 5)
             stays.append(stay)
-        sitter_controller.setSitter(sitter.sitter_email, 0, 0, 0, stays)
+        sitter_controller.set_sitter(sitter.sitter_email, 0, 0, 0, stays)
         self.assertEqual(
             round(sitter_controller.ratings_score_calculator(sitter), 2), 1.88)
         return sitter_controller.ratings_score_calculator(sitter)

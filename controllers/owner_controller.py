@@ -6,10 +6,10 @@ from models.data_store import datastore
 
 class OwnerController:
         
-    def GetAllOwners(self):
+    def get_all_owners(self):
         return datastore.owners
 
-    def GetOwner(self, email: str):
+    def get_owner(self, email: str):
         for owner in list(datastore.owners.values()):
             if owner.owner_email == email:
                 return owner
