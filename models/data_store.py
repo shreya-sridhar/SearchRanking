@@ -31,18 +31,6 @@ class DataStore:
         else:
             DataStore.__shared_instance = self
 
-    def GetAllOwners(self):
-        return self.owners
-
-    def GetAllStays(self):
-        return self.stays
-
-    def GetOwner(self, email: str):
-        for owner in list(self.owners.values()):
-            if owner.owner_email == email:
-                return owner
-        return None
-
     # TODO : make this private method
     def ReadCSV(self):
         headers = {"rating": 0, "sitter_image": 1, "end_date": 2, "text": 3, "owner_image": 4, "dogs": 5, "sitter": 6, "owner": 7,"start_date": 8, "sitter_phone_number": 9, "sitter_email": 10, "owner_phone_number": 11, "owner_email": 12, "response_time_minutes": 13}

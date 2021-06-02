@@ -3,6 +3,7 @@ import sys
 sys.path.append(r"C:\Users\shrey\SearchRanking")
 from models.sitter import Sitter
 from models.data_store import datastore
+from typing import List
 
 class SitterController:
 
@@ -16,7 +17,7 @@ class SitterController:
                 return sitter
             return None
 
-    def setSitter(self, sitter_email: str, profile_score: float, ratings_score: float, search_score: float):
+    def setSitter(self, sitter_email: str, profile_score: float = 0, ratings_score: float = 0, search_score: float =0,stays:List['Stay'] = []):
         # tODO : Validate data
         for curr_sitter in list(datastore.sitters.values()):
             if curr_sitter.sitter_email == sitter_email:
@@ -24,9 +25,10 @@ class SitterController:
         sitter.profile_score = profile_score
         sitter.ratings_score = ratings_score
         sitter.search_score = search_score
+        sitter.stays = stays
 
     def addSitter(self, sitter: str, sitter_image: str, sitter_phone_number: int, sitter_email: str):
-        if not datastore.GetSitter(sitter_email):
+        if not self.GetSitter(sitter_email):
             count_sitters = len(datastore.sitters)
             sitter = Sitter(count_sitters, sitter, sitter_image,
                             sitter_phone_number, sitter_email)

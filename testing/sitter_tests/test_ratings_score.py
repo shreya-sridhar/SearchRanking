@@ -6,20 +6,26 @@ from models.sitter import Sitter
 from models.dog import Dog
 from models.owner import Owner
 from controllers.sitter_controller import sitter_controller
+from controllers.owner_controller import owner_controller
+from controllers.stay_controller import stay_controller
 
 class TestRatingsScore(unittest.TestCase):
 
     def testAllRatingsScores(self):
         self.stays_equals_zero()
-        self.stays_equals_ten()
-        self.stays_between_zero_and_ten()
-        self.stays_greater_than_ten()
+        # self.stays_equals_ten()
+        # self.stays_between_zero_and_ten()
+        # self.stays_greater_than_ten()
 
     # when sitter has no stays
-    def same_letters_test(self):
-        sitter = sitter_controller.addSitter("zzz", "https://images.dog/dog1.jpg", 12345678, "zzz.abc@gmail.com")[1]
+    def stays_equals_zero(self):
+        sitter = sitter_controller.addSitter("Jim", "https://images.dog/dog1.jpg", 82345678, "zz35z.abc@gmail.com")[1]
+        owner = owner_controller.GetOwner("user2555@verizon.net")
+        stay1 = stay_controller.AddStay(6/5/2021, "hello there!", [], 6/2/2021, owner, sitter)[1]
+        stay1_rated = stay_controller.AddRatingForStay(stay1, 5)
+        sitter_controller.setSitter(sitter.sitter_email, 0, 0, 0, [stay1_rated])
         self.assertEqual(
-            round(sitter_controller.profile_score_calculator(sitter), 2), 0.19)
+            round(sitter_controller.ratings_score_calculator(sitter), 2), 5.0)
 
     # # all distinct letters
     def distinct_letters_test(self):
@@ -56,7 +62,6 @@ class TestRatingsScore(unittest.TestCase):
         self.assertEqual(
             round(sitter_controller.profile_score_calculator(sitter), 2), 1.54)
 
-test_profile_scores = TestProfileScore()
-test_profile_scores.testAllProfileScores()
 
-
+test_ratings_scores = TestRatingsScore()
+test_ratings_scores.testAllRatingsScores()

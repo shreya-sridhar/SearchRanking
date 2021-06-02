@@ -10,3 +10,7 @@ Following assumptions are considered in modelling relationships:
 
 4. Response Time of Sitter is taken as -1 while a new Stay object is beign created
 
+5. Assuming you're always creating unique stays and not checking if stay already exists in the database
+
+
+

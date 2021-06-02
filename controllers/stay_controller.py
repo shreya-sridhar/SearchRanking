@@ -10,30 +10,22 @@ from models.data_store import datastore
 
 class StayController:
 
-    def __init__(self, owners=defaultdict(Owner), sitters=defaultdict(Sitter), stays=defaultdict(Stay), dogs = defaultdict(Dog)):
-        self.owners = owners
-        self.sitters = sitters
-        self.stays = stays
-        self.dogs = dogs
+    def GetAllStays(self):
+        return list(datastore.stays.values())
 
     def AddStay(self,end_date: 'datetime', text: str, dogs: list('Dog'), start_date:'datetime', owner: 'Owner' = None, sitter: 'Sitter' = None):
-        stay_count = len(datastore.stays)
-        curr_stay = Stay(stay_count,0,end_date,text,dogs,start_date,-1,owner,sitter)
-        datastore.stays[stay_count] = curr_stay
-        return [True,curr_stay]
+        # if not self.GetStay(end_date,text,dogs,start_date,owner,sitter):
+            stay_count = len(datastore.stays)
+            stay = Stay(stay_count, 0, end_date, text, dogs, start_date, 0, owner, sitter)
+            datastore.stays[stay_count] = stay 
+            return [True, stay]
+        # return [False, None]
 
     def AddRatingForStay(self,stay:'Stay',rating:float):
-        datastore.stays[stay_id].rating = rating
+        datastore.stays[stay.stay_id].rating = rating
+        return datastore.stays[stay.stay_id]
 
-
-
-
-
-
-
-
-
-
+stay_controller = StayController()
 
 
 
