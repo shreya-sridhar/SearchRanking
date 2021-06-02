@@ -13,4 +13,4 @@ OWNER_PHONE_NUMBER_INDEX = 11
 OWNER_EMAIL_INDEX = 12
 RESPONSE_TIME_MINUTES_INDEX = 13
 REVIEWS_PATH = r'db\reviews.csv'
-
+REGEX = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
